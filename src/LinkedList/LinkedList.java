@@ -71,12 +71,40 @@ public class LinkedList {
         return length;
     }
     void reverseLinkedList(){
-        Node temp=head;
-        while (temp!=null){
-            temp=temp.next;
+        Node nextNode=null;
+        Node currNode=head;
+        Node preNode=null;
+        while (currNode!=null){
+            nextNode=currNode.next;
+            currNode.next=preNode;
+            preNode=currNode;
+            currNode=nextNode;
+
         }
-        head=temp;
+        head=preNode;
     }
+    Node getMiddleNode(Node start, Node end){
+        if(start==null) return null;
+        Node slow=start;
+        Node fast=start;
+        while (fast!=end && fast.next!=end){
+            slow=slow.next;
+            fast=fast.next.next;
+        }
+        return slow;
+    }
+    boolean binarySearch(int key){
+        Node start=head;
+        Node end=null;
+        while (start!=end){
+            Node middle=getMiddleNode(start,end);
+            if(middle.data==key) return  true;
+            if(key<middle.data) end=middle;
+            if(key>middle.data) start=middle.next;
+        }
+        return false;
+    }
+
     public static void main(String[] args){
         LinkedList list= new LinkedList();
         list.insertAtEnd(12);
@@ -91,7 +119,6 @@ public class LinkedList {
         System.out.println("Linked List length is :: "+list.getCount());
         //Reversing the linked list now
         list.display();
-        list.reverseLinkedList();
-        list.display();
+        System.out.println("is element present :: "+list.binarySearch(30));
     }
 }
