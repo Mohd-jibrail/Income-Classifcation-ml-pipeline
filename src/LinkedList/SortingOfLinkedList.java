@@ -1,7 +1,11 @@
 package LinkedList;
 
 import LinkedList.LinkedList;
-
+import java.util.HashSet;
+import java.util.InputMismatchException;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Set;
 public class SortingOfLinkedList extends LinkedList {
     Node head;
 
@@ -79,19 +83,50 @@ public class SortingOfLinkedList extends LinkedList {
         }
         return sorted;
     }
+    public List<Integer> findDuplicatesSorted() {
+        List<Integer> duplicates = new ArrayList<>();
+        Node current = this.head;
 
+        while (current != null && current.next != null) {
+            if (current.data == current.next.data) {
+                duplicates.add(current.data);
+            }
+            current = current.next;
+        }
+
+        return duplicates;
+    }
+    public List<Integer> findDuplicatesUnsorted() {
+        List<Integer> duplicates = new ArrayList<>();
+        Set<Integer> seen = new HashSet<Integer>();
+        Node current = this.head;
+
+        while (current != null) {
+            if (seen.contains(current.data)) {
+                duplicates.add(current.data);
+            } else {
+                seen.add(current.data);
+            }
+            current = current.next;
+        }
+
+        return duplicates;
+    }
     public static void main(String[] args) {
         System.out.println("------Sorting Linked List----");
         SortingOfLinkedList list = new SortingOfLinkedList();
-        list.insertAtBeginning(12);
-        list.insertAtBeginning(11);
+        list.insertAtBeginning(13);
+        list.insertAtBeginning(13);
+        list.insertAtBeginning(13);
         list.insertAtBeginning(13);
 
         // Uncomment the sorting method you want to use
         // list.selectionSort();
         // list.bubbleSort();
-        list.insertionSort();
-
+        //list.insertionSort();
         list.display();
+        //System.out.println("Duplicated :: "+list.findDuplicatesSorted());
+        System.out.println("Duplicated :: "+list.findDuplicatesUnsorted());
+
     }
 }
