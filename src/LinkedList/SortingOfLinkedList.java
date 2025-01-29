@@ -7,15 +7,10 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Set;
 public class SortingOfLinkedList extends LinkedList {
-    Node head;
-
-    SortingOfLinkedList() {
-        this.head = super.head;
-    }
 
     // Function to sort the linked list using Selection Sort
     public void selectionSort() {
-        Node temp = this.head;
+        Node temp = super.head;
         while (temp != null) {
             Node min = temp;
             Node r = temp.next;
@@ -42,7 +37,7 @@ public class SortingOfLinkedList extends LinkedList {
         }
         do {
             swapped = 0;
-            ptr1 = this.head;
+            ptr1 = super.head;
             while (ptr1.next != lptr) {
                 if (ptr1.data > ptr1.next.data) {
                     int temp = ptr1.data;
@@ -59,7 +54,7 @@ public class SortingOfLinkedList extends LinkedList {
     // Function to sort the linked list using Insertion Sort
     public void insertionSort() {
         Node sorted = null;
-        Node current = head;
+        Node current = super.head;
         while (current != null) {
             Node next = current.next;
             sorted = sortedInsert(sorted, current);
@@ -85,7 +80,7 @@ public class SortingOfLinkedList extends LinkedList {
     }
     public List<Integer> findDuplicatesSorted() {
         List<Integer> duplicates = new ArrayList<>();
-        Node current = this.head;
+        Node current = super.head;
 
         while (current != null && current.next != null) {
             if (current.data == current.next.data) {
@@ -99,7 +94,7 @@ public class SortingOfLinkedList extends LinkedList {
     public List<Integer> findDuplicatesUnsorted() {
         List<Integer> duplicates = new ArrayList<>();
         Set<Integer> seen = new HashSet<Integer>();
-        Node current = this.head;
+        Node current = super.head;
 
         while (current != null) {
             if (seen.contains(current.data)) {
@@ -112,21 +107,56 @@ public class SortingOfLinkedList extends LinkedList {
 
         return duplicates;
     }
+    public void removeDuplicatesInSorted(){
+        Node current = super.head;
+        while (current!=null && current.next!=null){
+            if(current.data==current.next.data){
+                current.next=current.next.next;
+            } else {
+                current=current.next;
+            }
+        }
+    }
+    public void removeDuplicatesUnsorted() {
+        HashSet<Integer> seen = new HashSet<>();
+        Node current = super.head;
+        Node prev = null;
+        while (current != null) {
+            if (seen.contains(current.data)) {
+                prev.next = current.next;
+            } else {
+                seen.add(current.data);
+                prev = current;
+            }
+            current = current.next;
+        }
+    }
     public static void main(String[] args) {
         System.out.println("------Sorting Linked List----");
         SortingOfLinkedList list = new SortingOfLinkedList();
+        /**list.insertAtBeginning(14);
         list.insertAtBeginning(13);
-        list.insertAtBeginning(13);
-        list.insertAtBeginning(13);
-        list.insertAtBeginning(13);
+        list.insertAtBeginning(12);
+        list.insertAtBeginning(12);*/
 
         // Uncomment the sorting method you want to use
         // list.selectionSort();
         // list.bubbleSort();
         //list.insertionSort();
+        list.insertAtEnd(11);
+        list.insertAtEnd(12);
+        list.insertAtEnd(12);
+        list.insertAtEnd(13);
+
         list.display();
-        //System.out.println("Duplicated :: "+list.findDuplicatesSorted());
-        System.out.println("Duplicated :: "+list.findDuplicatesUnsorted());
+        System.out.println("Duplicated in Sorted list :: "+list.findDuplicatesSorted());
+        list.removeDuplicatesInSorted();
+        list.display();
+        list.insertAtEnd(13);
+        System.out.println("Duplicated in unsorted list :: "+list.findDuplicatesUnsorted());
+        list.display();
+        list.removeDuplicatesUnsorted();
+        list.display();
 
     }
 }
