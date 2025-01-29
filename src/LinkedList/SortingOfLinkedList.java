@@ -7,7 +7,10 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Set;
 public class SortingOfLinkedList extends LinkedList {
-
+    Node head;
+    SortingOfLinkedList(){
+        this.head=super.head;
+    }
     // Function to sort the linked list using Selection Sort
     public void selectionSort() {
         Node temp = super.head;
@@ -155,6 +158,42 @@ public class SortingOfLinkedList extends LinkedList {
         first.next=null;
         head=second;
     }
+    public static LinkedList addTwoLists(LinkedList first, LinkedList second) {
+        Node firstHead = first.head;
+        Node secondHead = second.head;
+        LinkedList result = new LinkedList();
+        Node prev = null;
+        Node temp = null;
+        int carry = 0, sum;
+
+        while (firstHead != null || secondHead != null) {
+            sum = carry + (firstHead != null ? firstHead.data : 0) + (secondHead != null ? secondHead.data : 0);
+            carry = (sum >= 10) ? 1 : 0;
+            sum = sum % 10;
+            temp = new Node(sum);
+
+            if (result.head == null) {
+                result.head = temp;
+            } else {
+                assert prev != null;
+                prev.next = temp;
+            }
+            prev = temp;
+
+            if (firstHead != null) {
+                firstHead = firstHead.next;
+            }
+            if (secondHead != null) {
+                secondHead = secondHead.next;
+            }
+        }
+
+        if (carry > 0) {
+            temp.next = new Node(carry);
+        }
+        return result;
+    }
+
     public static void main(String[] args) {
         System.out.println("------Sorting Linked List----");
         SortingOfLinkedList list = new SortingOfLinkedList();
@@ -172,7 +211,7 @@ public class SortingOfLinkedList extends LinkedList {
         list.insertAtEnd(12);
         list.insertAtEnd(13);
 
-        list.display();
+        /**list.display();
         System.out.println("Duplicated in Sorted list :: "+list.findDuplicatesSorted());
         list.removeDuplicatesInSorted();
         list.display();
@@ -184,7 +223,16 @@ public class SortingOfLinkedList extends LinkedList {
         list.moveToFront();
         list.display();
         list.moveToLast();
-        list.display();
+        list.display();*/
+        SortingOfLinkedList list1= new SortingOfLinkedList();
+        SortingOfLinkedList list2 = new SortingOfLinkedList();
+        list1.insertAtEnd(1);
+        list1.insertAtEnd(2);
+        list2.insertAtEnd(1);
+        list2.insertAtEnd(3);
+        LinkedList list3 = addTwoLists(list1,list2);
+        list3.display();
+        //System.out.println("Result :: "+list3.data);
 
     }
 }
