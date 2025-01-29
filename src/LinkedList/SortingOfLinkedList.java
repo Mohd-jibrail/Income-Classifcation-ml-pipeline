@@ -131,6 +131,30 @@ public class SortingOfLinkedList extends LinkedList {
             current = current.next;
         }
     }
+    public void moveToFront(){
+        if(super.head==null || super.head.next==null) return;
+        Node last = super.head;
+        Node secondLast = null;
+        while (last.next!=null){
+            secondLast=last;
+            last = last.next;
+        }
+        secondLast.next=null;
+        last.next = head;
+        head = last;
+    }
+    public void moveToLast(){
+        Node last=super.head;
+        if (last==null || last.next==null) return;
+        while (last.next != null){
+            last=last.next;
+        }
+        Node first = super.head;
+        Node second = first.next;
+        last.next=first;
+        first.next=null;
+        head=second;
+    }
     public static void main(String[] args) {
         System.out.println("------Sorting Linked List----");
         SortingOfLinkedList list = new SortingOfLinkedList();
@@ -156,6 +180,10 @@ public class SortingOfLinkedList extends LinkedList {
         System.out.println("Duplicated in unsorted list :: "+list.findDuplicatesUnsorted());
         list.display();
         list.removeDuplicatesUnsorted();
+        list.display();
+        list.moveToFront();
+        list.display();
+        list.moveToLast();
         list.display();
 
     }
