@@ -2,20 +2,17 @@ package SMS;
 
 import java.util.Scanner;
 
-import LinkedList.Node;
 import SMS.Student;
 public class SMSystem {
     public Student student_start;
     public static int studentSerialNumber=0;
     private SMSystem(){}
-    private static SMSystem activeStudents;
-    private static SMSystem deletedStudents;
-    public static SMSystem getActiveStudentsList(){
-        activeStudents= new SMSystem();
+    private static final SMSystem activeStudents =new SMSystem();
+    private static final SMSystem deletedStudents =new SMSystem();
+    public static SMSystem getActiveStudents(){
         return activeStudents;
     }
     public static SMSystem getDeletedStudents(){
-        deletedStudents=new SMSystem();
         return deletedStudents;
     }
     public String studentAdmission(String name, String father, String mother, String course, String code){
@@ -88,11 +85,11 @@ public class SMSystem {
     }
     public static void studentAdmissionCancel(String roll_number){
 
-        Student temp_student=activeStudents.student_start;
+        Student temp_student=getActiveStudents().student_start;
         Student prev_student=null;
         if(temp_student!=null && temp_student.getRoll_number().equalsIgnoreCase(roll_number)){
-            activeStudents.student_start=temp_student.next_student;
-            deletedStudents.studentAdmission(temp_student.getName(),temp_student.getFather_name(),temp_student.getMother_name(),temp_student.getCourse_name(),temp_student.getCourse_code());
+            getActiveStudents().student_start=temp_student.next_student;
+            getDeletedStudents().studentAdmission(temp_student.getName(),temp_student.getFather_name(),temp_student.getMother_name(),temp_student.getCourse_name(),temp_student.getCourse_code());
             System.out.println("Admission Cancelled");
             return;
         }
@@ -104,7 +101,7 @@ public class SMSystem {
             System.out.println("Student not found");
             return;
         }else {
-            deletedStudents.studentAdmission(temp_student.getName(),temp_student.getFather_name(),temp_student.getMother_name(),temp_student.getCourse_name(),temp_student.getCourse_code());
+            getDeletedStudents().studentAdmission(temp_student.getName(),temp_student.getFather_name(),temp_student.getMother_name(),temp_student.getCourse_name(),temp_student.getCourse_code());
             assert prev_student != null;
             prev_student.next_student=temp_student.next_student;
             studentSerialNumber--;
