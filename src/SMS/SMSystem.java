@@ -86,24 +86,29 @@ public class SMSystem {
             add=sc.nextLine();
         }
     }
-    public static String studentAdmissionCancel(String roll_number){
+    public static void studentAdmissionCancel(String roll_number){
 
         Student temp_student=activeStudents.student_start;
         Student prev_student=null;
         if(temp_student!=null && temp_student.getRoll_number().equalsIgnoreCase(roll_number)){
             activeStudents.student_start=temp_student.next_student;
-            return "Admission Cancelled";
+            deletedStudents.studentAdmission(temp_student.getName(),temp_student.getFather_name(),temp_student.getMother_name(),temp_student.getCourse_name(),temp_student.getCourse_code());
+            System.out.println("Admission Cancelled");
+            return;
         }
-        while (temp_student!= null && temp_student.next_student!=null){
-            if(temp_student.getRoll_number().equalsIgnoreCase(roll_number)){
-                deletedStudents.studentAdmission(temp_student.getName(),temp_student.getFather_name(),temp_student.getMother_name(),temp_student.getCourse_name(),temp_student.getCourse_code());
-                prev_student.next_student=temp_student.next_student;
-                studentSerialNumber--;
-
-            }
-            prev_student =temp_student;
+        while (temp_student!= null && !temp_student.getRoll_number().equalsIgnoreCase(roll_number)){
+            prev_student=temp_student;
             temp_student=temp_student.next_student;
         }
-        return "No Student Found";
+        if(temp_student==null){
+            System.out.println("Student not found");
+            return;
+        }else {
+            deletedStudents.studentAdmission(temp_student.getName(),temp_student.getFather_name(),temp_student.getMother_name(),temp_student.getCourse_name(),temp_student.getCourse_code());
+            assert prev_student != null;
+            prev_student.next_student=temp_student.next_student;
+            studentSerialNumber--;
+            System.out.println("--------------------");
+        }
     }
 }

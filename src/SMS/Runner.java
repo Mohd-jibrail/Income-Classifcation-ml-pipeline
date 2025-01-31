@@ -17,6 +17,8 @@ public class Runner {
         //SMSystem.displayStudent(activeStudents.getStudentInformation(sc.nextLine()));
         System.out.println("Deleting the added student");
         SMSystem.studentAdmissionCancel("DCS1");
+        SMSystem.studentAdmissionCancel("DCS2");
+        System.out.println("----------------");
         deletedStudents.displayStudents();
     }
 }

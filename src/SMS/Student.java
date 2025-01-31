@@ -7,7 +7,8 @@ public class Student {
     private String roll_number;
     private String course_name;
     private String course_code;
-    Student(String name,String father_name,String mother_name, String course_name, String course_code){
+    Student(String name,String father_name,String mother_name,
+            String course_name, String course_code){
         this.name=name;
         this.father_name=father_name;
         this.mother_name=mother_name;
