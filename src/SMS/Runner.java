@@ -22,7 +22,10 @@ public class Runner {
         // SMSystem.studentAdmissionCancel("DCS2");
         // System.out.println("----------------");
         // deletedStudents.displayStudents();
-        utilities.updateName("DCS1","Bob", "active");
+        utilities.updateName("DCS1","Mohd Jibrail", "active");
+        utilities.updateFatherName("DCS1","Gufran Ahmad", "active");
+        utilities.updateMotherName("DCS1","Raeesa Bano", "active");
+        utilities.updateCourseName("DCS1","Btech CS", "active");
         activeStudents.displayStudents();
 
     }
